@@ -533,6 +533,176 @@
         }
         .av-meta.is-visible { opacity: 1; transform: translateY(0); }
 
+        /* ─── SIDE MENU ─── */
+        .av-menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            pointer-events: auto;
+            padding: 4px;
+            transition: opacity 0.2s;
+        }
+        .av-menu-btn:hover { opacity: 0.7; }
+
+        .av-hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            position: relative;
+        }
+        .av-hamburger-line {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            border-radius: 1px;
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        opacity 0.25s ease;
+            transform-origin: center;
+        }
+        .av-sidemenu.is-open .av-hamburger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .av-sidemenu.is-open .av-hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        .av-sidemenu.is-open .av-hamburger-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .av-sidemenu {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0,0,0,0.15);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .av-sidemenu.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .av-sidemenu-inner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            background: var(--av-color-bg);
+            padding: 80px 48px 48px;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-left: 1px solid var(--av-color-border);
+        }
+        .av-sidemenu.is-open .av-sidemenu-inner {
+            transform: translateX(0);
+        }
+        .av-sidemenu-close {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--av-color-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .av-sidemenu-close:hover { color: var(--av-color-texto); }
+        .av-sidemenu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 20px;
+        }
+        .av-sidemenu-links li {
+            overflow: hidden;
+        }
+        .av-sidemenu-links a {
+            font-family: var(--av-font-heading);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 500;
+            text-transform: uppercase;
+            color: var(--av-color-texto);
+            text-decoration: none;
+            line-height: 1.2;
+            padding: 12px 0;
+            transition: color 0.3s ease, padding 0.3s ease;
+            display: block;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-16px);
+        }
+        .av-sidemenu.is-open .av-sidemenu-links a {
+            animation: menuLinkIn 0.5s ease-out forwards;
+        }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(1) a { animation-delay: 0.05s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(2) a { animation-delay: 0.10s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(3) a { animation-delay: 0.15s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(4) a { animation-delay: 0.20s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(5) a { animation-delay: 0.25s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(6) a { animation-delay: 0.30s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(7) a { animation-delay: 0.35s; }
+
+        @keyframes menuLinkIn {
+            0% { opacity: 0; transform: translateX(-16px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .av-sidemenu-links a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--av-color-accent);
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .av-sidemenu.is-open .av-sidemenu-links a::before {
+            width: 100%;
+        }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(1) a::before { transition-delay: 0.15s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(2) a::before { transition-delay: 0.20s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(3) a::before { transition-delay: 0.25s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(4) a::before { transition-delay: 0.30s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(5) a::before { transition-delay: 0.35s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(6) a::before { transition-delay: 0.40s; }
+        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(7) a::before { transition-delay: 0.45s; }
+
+        .av-sidemenu-links a:hover {
+            color: var(--av-color-accent);
+            padding-left: 8px;
+        }
+        .av-sidemenu-footer {
+            margin-top: auto;
+            font-family: var(--av-font-mono);
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--av-color-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-top: 32px;
+            border-top: 1px solid var(--av-color-border);
+        }
+        body.menu-open { overflow: hidden; }
+        body.menu-open .av-hero,
+        body.menu-open .av-section,
+        body.menu-open .av-footer {
+            filter: blur(2px);
+            transition: filter 0.4s ease;
+        }
+
         /* ─── RESPONSIVE ─── */
         @media (max-width: 1000px) {
             .av-split { grid-template-columns: 1fr; gap: var(--av-space-xl); }
@@ -628,13 +798,34 @@
 
 <nav class="av-nav">
     <a href="#" class="av-nav-logo">Archivo en disputa</a>
-    <ul class="av-nav-links">
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#contexto">Tacna y Arica</a></li>
-        <li><a href="#preservacion">Estímulo Preservación</a></li>
-        <li><a href="#">Perfiles y proyectos</a></li>
-    </ul>
+    <button class="av-menu-btn" aria-label="Menú">
+        <span class="av-hamburger">
+            <span class="av-hamburger-line"></span>
+            <span class="av-hamburger-line"></span>
+            <span class="av-hamburger-line"></span>
+        </span>
+    </button>
 </nav>
+
+<!-- ═══════════════ SIDE MENU ═══════════════ -->
+<div class="av-sidemenu" id="sidemenu">
+    <div class="av-sidemenu-inner">
+        <button class="av-sidemenu-close" aria-label="Cerrar menú">×</button>
+        <ul class="av-sidemenu-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#contexto">Tacna y Arica</a></li>
+            <li><a href="#custodio">Custodio</a></li>
+            <li><a href="#preservacion">Preservación</a></li>
+            <li><a href="#manayscan">Manayscan</a></li>
+            <li><a href="#exhibicion">Exhibición</a></li>
+            <li><a href="#usos">Nuevos usos</a></li>
+        </ul>
+        <div class="av-sidemenu-footer">
+            <span>© 2025 · Archivo en disputa</span>
+            <span>✦ Proyecto de investigación</span>
+        </div>
+    </div>
+</div>
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <section id="inicio" class="av-hero">
@@ -1068,18 +1259,35 @@ document.addEventListener('DOMContentLoaded', () => {
         nav.classList.toggle('scrolled', window.scrollY > 80);
     }, { passive: true });
 
-    const navLinks = document.querySelectorAll('.av-nav-links a');
-    const sections = document.querySelectorAll('section[id]');
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            navLinks.forEach(link => {
-                link.style.color = entry.isIntersecting && link.getAttribute('href') === '#' + entry.target.id
-                    ? '#fff'
-                    : 'rgba(255,255,255,0.6)';
-            });
-        });
-    }, { threshold: 0.3 });
-    sections.forEach(s => sectionObserver.observe(s));
+    // ─── SIDE MENU ───
+    const sidemenu = document.getElementById('sidemenu');
+    const menuBtn = document.querySelector('.av-menu-btn');
+    const closeBtn = document.querySelector('.av-sidemenu-close');
+    const sidemenuLinks = sidemenu.querySelectorAll('.av-sidemenu-links a');
+
+    function openMenu() {
+        sidemenu.classList.add('is-open');
+        document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+        sidemenu.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
+    }
+
+    menuBtn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+
+    sidemenuLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidemenu.classList.contains('is-open')) closeMenu();
+    });
+
+    sidemenu.addEventListener('click', (e) => {
+        if (e.target === sidemenu) closeMenu();
+    });
 });
 </script>
 </body>
