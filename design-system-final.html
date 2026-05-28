@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System · Archivo en disputa</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #F0EDE8;
+            padding: 32px 20px;
+            font-family: 'Source Sans 3', sans-serif;
+            color: #1A1A1A;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #FAFAF8;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+        }
+
+        .header {
+            padding: 40px 48px 32px;
+            border-bottom: 1px solid #ECECEC;
+        }
+
+        .header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1;
+            color: #1A1A1A;
+        }
+
+        .header h1 span { color: #4E6B4E; }
+
+        .header p {
+            color: #999;
+            font-size: 0.95rem;
+            margin-top: 8px;
+            max-width: 550px;
+            line-height: 1.5;
+        }
+
+        .header .badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #4E6B4E;
+            border: 1px solid #ECECEC;
+            padding: 4px 12px;
+            border-radius: 3px;
+            margin-bottom: 16px;
+        }
+
+        .ds-section {
+            padding: 40px 48px;
+            border-bottom: 1px solid #ECECEC;
+        }
+
+        .ds-section:last-of-type { border-bottom: none; }
+
+        .ds-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            color: #4E6B4E;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ds-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ECECEC;
+        }
+
+        .ds-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #1A1A1A;
+            margin-bottom: 16px;
+        }
+
+        /* ═══════════════════════════════════════ */
+        /* 1. COLOR PALETTE                        */
+        /* ═══════════════════════════════════════ */
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .swatch {
+            border-radius: 4px;
+            padding: 20px 14px 14px;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .swatch .hex {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 400;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .swatch .usage {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 400;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .swatch-light { color: #1A1A1A; }
+        .swatch-dark  { color: white; }
+
+        .color-notes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .color-note {
+            font-size: 0.78rem;
+            color: #888;
+            line-height: 1.5;
+            padding: 12px 16px;
+            background: #F5F5F5;
+            border-radius: 4px;
+        }
+
+        .color-note strong {
+            color: #1A1A1A;
+            font-weight: 600;
+        }
+
+        /* ═══════════════════════════════════════ */
+        /* 2. TYPOGRAPHY                           */
+        /* ═══════════════════════════════════════ */
+        .typo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .typo-card {
+            padding: 16px 20px;
+            background: #F8F8F8;
+            border-radius: 4px;
+        }
+
+        .typo-card .font-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #4E6B4E;
+            margin-bottom: 8px;
+        }
+
+        .typo-card .sample { margin-bottom: 4px; }
+
+        .typo-card .sample .label {
+            font-size: 0.55rem;
+            color: #bbb;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .typo-card .sample .text { margin-top: 2px; }
+
+        .typo-card .sample + .sample { margin-top: 10px; }
+
+        /* ═══════════════════════════════════════ */
+        /* 3. SPACING & RADIUS                    */
+        /* ═══════════════════════════════════════ */
+        .spacing-demo {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .spacing-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .spacing-block .bar {
+            background: #1A1A1A;
+            border-radius: 2px;
+            opacity: 0.15;
+        }
+
+        .spacing-block .sp-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: #999;
+        }
+
+        .radius-demo {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .radius-box {
+            width: 48px;
+            height: 48px;
+            background: #4E6B4E;
+            opacity: 0.2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            color: #2E452E;
+        }
+
+        /* ═══════════════════════════════════════ */
+        /* 4. COMPONENTS                           */
+        /* ═══════════════════════════════════════ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: none;
+            cursor: default;
+            transition: all 0.15s;
+        }
+
+        .btn-primary { background: #4E6B4E; color: white; }
+        .btn-outline { background: transparent; color: #4E6B4E; border: 2px solid #4E6B4E; }
+        .btn-ghost   { background: transparent; color: #1A1A1A; border: 1px solid #ECECEC; }
+        .btn-dark    { background: #1E1E1E; color: #E0E0E0; }
+        .btn-muted   { background: #F5F5F5; color: #999; }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tags-demo {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .t {
+            font-size: 0.65rem;
+            font-weight: 500;
+            padding: 5px 14px;
+            border-radius: 3px;
+            cursor: default;
+        }
+
+        .t-green { background: #EDF2ED; color: #4E6B4E; }
+        .t-muted { background: #F5F5F5; color: #999; }
+        .t-line  { background: transparent; color: #aaa; border: 1px solid #ECECEC; }
+        .t-dark  { background: #333; color: #ccc; }
+
+        .card-sample {
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+            border: 1px solid #F2F2F2;
+            transition: all 0.2s;
+        }
+
+        .card-sample:hover {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+            border-color: transparent;
+        }
+
+        .card-sample .c-ico { font-size: 1.2rem; display: block; margin-bottom: 8px; }
+        .card-sample h4 { font-family: 'Oswald', sans-serif; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: #1A1A1A; margin-bottom: 4px; }
+        .card-sample p { font-size: 0.74rem; color: #999; line-height: 1.5; }
+        .card-sample .c-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.48rem; color: #4E6B4E; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+        .quote-sample {
+            background: #1E1E1E;
+            color: #DDD;
+            padding: 24px 28px;
+            border-radius: 4px;
+            position: relative;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .quote-sample::before {
+            content: '"';
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1;
+            color: #555;
+            opacity: 0.3;
+            position: absolute;
+            top: 6px;
+            left: 12px;
+        }
+
+        .quote-sample cite {
+            display: block;
+            margin-top: 10px;
+            font-style: normal;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5rem;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .pull-sample {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+            color: #1A1A1A;
+            padding: 16px 0 16px 20px;
+            border-left: 3px solid #4E6B4E;
+        }
+
+        .pull-sample cite {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            color: #bbb;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-top: 6px;
+            font-style: normal;
+        }
+
+        .divider-sample { height: 1px; background: #ECECEC; margin: 12px 0; }
+
+        .dark-sample {
+            background: #1E1E1E;
+            padding: 24px 28px;
+            border-radius: 4px;
+        }
+
+        .dark-sample .ds-dark-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.45rem;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .dark-sample h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #F0F0F0;
+        }
+
+        .dark-sample p {
+            font-size: 0.78rem;
+            color: #888;
+            line-height: 1.5;
+            margin-top: 6px;
+        }
+
+        /* ═══════════════════════════════════════ */
+        /* HERO CONCEPT                            */
+        /* ═══════════════════════════════════════ */
+        .hero-concept {
+            margin-top: 24px;
+            background: #1A1A1A;
+            border-radius: 4px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-concept .hero-year {
+            position: absolute;
+            font-family: 'Oswald', sans-serif;
+            font-size: 10rem;
+            font-weight: 700;
+            line-height: 1;
+            color: white;
+            opacity: 0.03;
+            right: 20px;
+            bottom: -20px;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .hero-concept .hero-content { position: relative; z-index: 1; }
+
+        .hero-concept .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: #4E6B4E;
+            margin-bottom: 12px;
+        }
+
+        .hero-concept h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+            line-height: 1.05;
+            color: white;
+        }
+
+        .hero-concept h2 span { color: #666; }
+
+        .hero-concept p {
+            color: #777;
+            font-size: 0.85rem;
+            max-width: 450px;
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+
+        /* ═══════════════════════════════════════ */
+        /* GUIDELINES                              */
+        /* ═══════════════════════════════════════ */
+        .guidelines {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .guide {
+            padding: 14px 18px;
+            background: #F8F8F8;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        .guide strong {
+            display: block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #1A1A1A;
+            margin-bottom: 4px;
+        }
+
+        .guide .tag-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+
+        @media (max-width: 700px) {
+            .header { padding: 28px 24px; }
+            .header h1 { font-size: 2rem; }
+            .ds-section { padding: 28px 24px; }
+            .palette { grid-template-columns: repeat(3, 1fr); }
+            .typo-grid { grid-template-columns: 1fr; }
+            .color-notes { grid-template-columns: 1fr; }
+            .guidelines { grid-template-columns: 1fr; }
+            .hero-concept { padding: 32px 24px; }
+            .hero-concept h2 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- HEADER -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="header">
+        <div class="badge">✦ Design system v3.0 · Final</div>
+        <h1>ARCHIVO <span>EN</span> DISPUTA</h1>
+        <p>Regímenes de valor y nuevos usos de la película <em>Tacna y Arica</em> de Renée Oro (1925). Sistema de diseño para el proyecto de investigación en antropología visual.</p>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- 1. COLOR PALETTE -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="ds-section">
+        <div class="ds-label">1 · Paleta de color</div>
+
+        <div class="palette">
+            <div class="swatch swatch-light" style="background:#FAFAF8;">
+                Fondo<span class="hex">#FAFAF8</span><span class="usage">Background principal</span>
+            </div>
+            <div class="swatch swatch-dark" style="background:#1A1A1A;">
+                Texto<span class="hex">#1A1A1A</span><span class="usage">Textos, títulos</span>
+            </div>
+            <div class="swatch swatch-dark" style="background:#1E1E1E;">
+                Dark surface<span class="hex">#1E1E1E</span><span class="usage">Secciones oscuras, timeline</span>
+            </div>
+            <div class="swatch swatch-dark" style="background:#ECECEC; color:#666;">
+                Border<span class="hex">#ECECEC</span><span class="usage">Líneas divisorias, bordes</span>
+            </div>
+            <div class="swatch swatch-dark" style="background:#999;">
+                Muted<span class="hex">#999</span><span class="usage">Textos secundarios</span>
+            </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:12px;">
+            <div class="swatch swatch-dark" style="background:#4E6B4E; flex:1; padding:14px; min-height:auto;">
+                Acento<span class="hex">#4E6B4E</span><span class="usage">Único acento · badges, links, botones, pull quotes</span>
+            </div>
+            <div class="swatch swatch-light" style="background:#F5F5F5; flex:1; padding:14px; min-height:auto;">
+                Surface alt<span class="hex">#F5F5F5</span><span class="usage">Fondo secundario, tags suaves</span>
+            </div>
+            <div class="swatch swatch-dark" style="background:#222; flex:1; padding:14px; min-height:auto;">
+                Dark alt<span class="hex">#222</span><span class="usage">Separador en dark mode</span>
+            </div>
+        </div>
+
+        <div class="palette" style="margin-top:12px;">
+            <div class="swatch swatch-light" style="background:#EDF2ED;">
+                Verde light<span class="hex">#EDF2ED</span><span class="usage">Tags, fondos sutiles</span>
+            </div>
+            <div class="swatch swatch-dark" style="background:#2E452E;">
+                Verde deep<span class="hex">#2E452E</span><span class="usage">Hover, variación oscura</span>
+            </div>
+            <div class="swatch swatch-light" style="background:#FAFAF8; visibility:hidden;"></div>
+            <div class="swatch swatch-light" style="background:#FAFAF8; visibility:hidden;"></div>
+            <div class="swatch swatch-light" style="background:#FAFAF8; visibility:hidden;"></div>
+        </div>
+
+        <div class="color-notes">
+            <div class="color-note">
+                <strong>Paleta mínima, casi neutra</strong><br>
+                Sin color dominante. Verde terrozo #4E6B4E como único acento — en badges, botones, links, pull quotes, metadata. La tipografía (Oswald) es el principal recurso visual.
+            </div>
+            <div class="color-note">
+                <strong>Dark mode suave</strong><br>
+                #1E1E1E (no negro puro). Sin acento de color en secciones oscuras — solo tipografía y jerarquía. Divider en dark: #333.
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- 2. TYPOGRAPHY -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="ds-section">
+        <div class="ds-label">2 · Tipografía</div>
+        <p style="color:#999; font-size:0.85rem; margin-bottom:20px; max-width:550px; line-height:1.5;">
+            La tipografía <strong>es el color</strong>. Tres familias sans-serif con jerarquía clara. Sin serif, sin decoración innecesaria.
+        </p>
+
+        <div class="typo-grid">
+            <div class="typo-card">
+                <div class="font-name">Headings · Oswald</div>
+                <div class="sample">
+                    <div class="label">H1 · 2.8rem (hero)</div>
+                    <div class="text" style="font-family:'Oswald',sans-serif; font-size:2.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.01em; line-height:1; color:#1A1A1A;">Preservación del patrimonio</div>
+                </div>
+                <div class="sample">
+                    <div class="label">H2 · 2.2rem (secciones)</div>
+                    <div class="text" style="font-family:'Oswald',sans-serif; font-size:2.2rem; font-weight:600; text-transform:uppercase; letter-spacing:0.01em; line-height:1.1; color:#1A1A1A;">El archivo como campo de disputa</div>
+                </div>
+                <div class="sample">
+                    <div class="label">H3 · 1.2rem (interiores)</div>
+                    <div class="text" style="font-family:'Oswald',sans-serif; font-size:1.2rem; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; color:#1A1A1A;">La obra y su custodio</div>
+                </div>
+                <div class="sample">
+                    <div class="label">Pull quote · 1.2–1.6rem</div>
+                    <div class="text" style="font-family:'Oswald',sans-serif; font-size:1.3rem; font-weight:500; text-transform:uppercase; letter-spacing:0.02em; color:#1A1A1A; border-left:3px solid #4E6B4E; padding-left:16px;">No solamente el espectador verá los hermosos paisajes</div>
+                </div>
+            </div>
+
+            <div class="typo-card">
+                <div class="font-name">Body · Source Sans 3</div>
+                <div class="sample">
+                    <div class="label">Body · 0.88rem (párrafos)</div>
+                    <div class="text" style="font-family:'Source Sans 3',sans-serif; font-size:0.88rem; line-height:1.7; color:#888;">Las políticas de preservación cultural reflejan la forma en que un país valora y protege su memoria. Ante la ausencia de una Cinemateca pública, la preservación ha sido asumida por la sociedad civil.</div>
+                </div>
+                <div class="sample">
+                    <div class="label">Small · 0.75rem (metadatos)</div>
+                    <div class="text" style="font-family:'Source Sans 3',sans-serif; font-size:0.75rem; color:#bbb;">Investigación · Antropología visual · Perú</div>
+                </div>
+                <div class="sample">
+                    <div class="label">Button · 0.72rem uppercase</div>
+                    <div class="text" style="font-family:'Source Sans 3',sans-serif; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#4E6B4E;">Explorar →</div>
+                </div>
+
+                <div style="margin-top:14px; padding-top:14px; border-top:1px solid #ECECEC;">
+                    <div class="font-name" style="color:#4E6B4E;">Monospace · JetBrains Mono</div>
+                    <div class="sample">
+                        <div class="label">Datos, fechas, etiquetas · 0.48–0.65rem</div>
+                        <div class="text" style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:#4E6B4E; text-transform:uppercase; letter-spacing:0.06em;">1925 · Tacna y Arica · 2022</div>
+                    </div>
+                    <div class="sample">
+                        <div class="text" style="font-family:'JetBrains Mono',monospace; font-size:0.5rem; color:#999; text-transform:uppercase; letter-spacing:0.12em;">⸻ Proyecto de investigación ⸻</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- 3. SPACING, RADIUS, DIVIDERS -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="ds-section">
+        <div class="ds-label">3 · Espaciado, bordes y líneas</div>
+
+        <div class="ds-title">Espaciado base (escala 4px)</div>
+        <div class="spacing-demo">
+            <div class="spacing-block"><div class="bar" style="width:4px; height:16px;"></div><span class="sp-label">4px</span></div>
+            <div class="spacing-block"><div class="bar" style="width:8px; height:16px;"></div><span class="sp-label">8px</span></div>
+            <div class="spacing-block"><div class="bar" style="width:16px; height:16px;"></div><span class="sp-label">16px</span></div>
+            <div class="spacing-block"><div class="bar" style="width:24px; height:16px;"></div><span class="sp-label">24px</span></div>
+            <div class="spacing-block"><div class="bar" style="width:32px; height:16px;"></div><span class="sp-label">32px</span></div>
+            <div class="spacing-block"><div class="bar" style="width:48px; height:16px;"></div><span class="sp-label">48px</span></div>
+            <div class="spacing-block"><div class="bar" style="width:64px; height:16px;"></div><span class="sp-label">64px</span></div>
+        </div>
+
+        <div class="ds-title" style="margin-top:24px;">Border radius</div>
+        <div class="radius-demo">
+            <div class="radius-box" style="border-radius:0;">0</div>
+            <div class="radius-box" style="border-radius:2px;">2</div>
+            <div class="radius-box" style="border-radius:4px; opacity:0.4;">4px</div>
+            <div class="radius-box" style="border-radius:8px;">8</div>
+            <div class="radius-box" style="border-radius:50%;">50%</div>
+        </div>
+        <p style="font-size:0.72rem; color:#bbb; margin-top:8px;">
+            <strong style="color:#1A1A1A;">Estándar: 4px</strong> · Botones, tarjetas, inputs, quotes. 2px para elementos muy pequeños.
+        </p>
+
+        <div class="ds-title" style="margin-top:24px;">Divider (línea divisoria)</div>
+        <p style="font-size:0.78rem; color:#999; line-height:1.5; max-width:500px;">
+            Línea de 1px, color <strong>#ECECEC</strong>. Entre secciones para marcar pausas sin ruido visual. En dark mode: <strong>#333</strong>.
+        </p>
+        <div class="divider-sample" style="margin:12px 0 8px;"></div>
+        <div style="background:#1E1E1E; padding:12px; border-radius:4px; margin-top:8px;">
+            <div style="height:1px; background:#333; margin:0;"></div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- 4. COMPONENTS -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="ds-section">
+        <div class="ds-label">4 · Componentes UI</div>
+
+        <div class="ds-title">Botones</div>
+        <div class="btn-group">
+            <span class="btn btn-primary">Primary</span>
+            <span class="btn btn-outline">Outline</span>
+            <span class="btn btn-ghost">Ghost</span>
+            <span class="btn btn-muted">Muted</span>
+            <span class="btn btn-dark">Dark</span>
+        </div>
+
+        <div class="ds-title" style="margin-top:28px;">Tags</div>
+        <div class="tags-demo">
+            <span class="t t-green">Preservación</span>
+            <span class="t t-muted">Investigación</span>
+            <span class="t t-line">1925</span>
+            <span class="t t-dark">Memoria</span>
+        </div>
+
+        <div class="ds-title" style="margin-top:28px;">Cards</div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+            <div class="card-sample">
+                <span class="c-ico">🎞️</span>
+                <h4>Cortometrajes andinos</h4>
+                <p>Digitalización de 5 cortos en 16mm.</p>
+                <div class="c-meta">Preservación · 2024</div>
+            </div>
+            <div class="card-sample">
+                <span class="c-ico">📂</span>
+                <h4>Archivo surandino</h4>
+                <p>Catalogación de 120 rollos.</p>
+                <div class="c-meta">Investigación · 2023</div>
+            </div>
+            <div class="card-sample">
+                <span class="c-ico">🎬</span>
+                <h4>Tacna y Arica</h4>
+                <p>Largometraje mudo de 1925.</p>
+                <div class="c-meta">Preservación · 2022</div>
+            </div>
+        </div>
+
+        <div class="ds-title" style="margin-top:28px;">Quotes</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="quote-sample">
+                Ambicionamos muchas cosas sin realmente dimensionar lo que iba a costar hacer todo eso y lo complicado que era.
+                <cite>— Edward de Ybarra</cite>
+            </div>
+            <div class="pull-sample">
+                La restauración audiovisual es percibida de manera distinta según el campo
+                <cite>— Conflicto por la legitimidad</cite>
+            </div>
+        </div>
+
+        <div class="ds-title" style="margin-top:28px;">Sección oscura (sin acento de color)</div>
+        <div class="dark-sample">
+            <div class="ds-dark-label">⸻ Tecnología</div>
+            <h4>Manayscan: escáner artesanal</h4>
+            <p>Estructura de madera con sistema de arrastre por sprocket. Una experiencia pionera en Sudamérica para la digitalización artesanal de 35mm.</p>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- 5. HERO CONCEPT -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="ds-section">
+        <div class="ds-label">5 · Concepto visual — Hero</div>
+        <p style="color:#999; font-size:0.85rem; margin-bottom:12px; max-width:550px; line-height:1.5;">
+            Demo del tratamiento tipográfico en hero. Sin color, solo tipografía. El año gigante como textura de fondo.
+        </p>
+
+        <div class="hero-concept">
+            <div class="hero-year">1925</div>
+            <div class="hero-content">
+                <div class="hero-label">⸻ Archivo en disputa</div>
+                <h2>Tacna <span>y</span> Arica</h2>
+                <p>Regímenes de valor y nuevos usos de la película de Renée Oro (1925).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- 6. GUIDELINES -->
+    <!-- ════════════════════════════════════════ -->
+    <div class="ds-section">
+        <div class="ds-label">6 · Guías de uso</div>
+
+        <div class="guidelines">
+            <div class="guide">
+                <strong>📐 Minimalismo tipográfico</strong>
+                No hay color dominante. La tipografía (Oswald) es el principal recurso visual. El verde terrozo es quirúrgico: solo donde importa.
+            </div>
+            <div class="guide">
+                <strong>🧪 Experimental pero legible</strong>
+                Años gigantes de fondo, tracking amplio, pull quotes, split screens. Nunca a costa de la legibilidad.
+            </div>
+            <div class="guide">
+                <strong>🎨 Un solo acento</strong>
+                Verde terrozo <span class="tag-dot" style="background:#4E6B4E;"></span> #4E6B4E. Úsalo en: botones, badges, links, pull quotes, metadata. No más colores.
+            </div>
+            <div class="guide">
+                <strong>🌙 Dark mode suave</strong>
+                Fondo: <span class="tag-dot" style="background:#1E1E1E;"></span> #1E1E1E. Sin acento de color. Solo tipografía y jerarquía.
+            </div>
+            <div class="guide">
+                <strong>📐 Border radius</strong>
+                4px estándar. Excepciones: 2px para elementos mínimos.
+            </div>
+            <div class="guide">
+                <strong>🔤 Jerarquía</strong>
+                Oswald (headings) → Source Sans 3 (body) → JetBrains Mono (datos). No mezclar. No serif.
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- FOOTER -->
+    <!-- ════════════════════════════════════════ -->
+    <div style="padding:24px 48px; border-top:1px solid #ECECEC; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <span style="font-size:0.7rem; color:#ccc;">© 2025 · Archivo en disputa</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:0.5rem; text-transform:uppercase; letter-spacing:0.1em; color:#ccc;">✦ Design system v3.0 · Final</span>
+    </div>
+
+</div><!-- /container -->
+
+</body>
+</html>

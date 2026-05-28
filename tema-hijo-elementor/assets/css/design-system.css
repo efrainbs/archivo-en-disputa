@@ -1,0 +1,544 @@
+/* ============================================================
+   🎨 DESIGN SYSTEM — Archivo en disputa
+   Proyecto de investigación · Preservación audiovisual Perú
+   ============================================================
+   Tabla de contenidos:
+   1.  CSS Custom Properties (variables)
+   2.  Tipografía global
+   3.  Elementos base (body, links, headings)
+   4.  Botones
+   5.  Tarjetas & superficies
+   6.  Pull quotes & blockquotes
+   7.  Secciones oscuras
+   8.  Navegación
+   9.  Hero
+   10. Footer
+   11. Utilidades
+   12. Responsive
+   ============================================================ */
+
+/* ─── 1. CUSTOM PROPERTIES ─────────────────────────────────── */
+:root {
+    /* ▸ Paleta neutra */
+    --av-color-bg:             #FAFAF8;
+    --av-color-blanco:         #FFFFFF;
+    --av-color-texto:          #1A1A1A;
+    --av-color-muted:          #999;
+    --av-color-border:         #ECECEC;
+    --av-color-surface-alt:    #F5F5F5;
+
+    /* ▸ Dark mode */
+    --av-color-dark:           #1E1E1E;
+    --av-color-dark-alt:       #222;
+    --av-color-dark-text:      #E0E0E0;
+    --av-color-dark-muted:     #888;
+    --av-color-dark-border:    #333;
+
+    /* ▸ Acento único: verde terrozo */
+    --av-color-accent:         #4E6B4E;
+    --av-color-accent-hover:   #2E452E;
+    --av-color-accent-light:   #EDF2ED;
+
+    /* ▸ Tipografía */
+    --av-font-heading:         'Oswald', sans-serif;
+    --av-font-body:            'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --av-font-mono:            'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+
+    /* ▸ Tamaños de fuente */
+    --av-text-xs:              clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+    --av-text-sm:              clamp(0.8rem, 0.75rem + 0.25vw, 0.88rem);
+    --av-text-base:            clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+    --av-text-lg:              clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+    --av-text-xl:              clamp(1.2rem, 1rem + 0.8vw, 1.5rem);
+    --av-text-2xl:             clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+    --av-text-3xl:             clamp(2rem, 1.5rem + 2vw, 2.8rem);
+    --av-text-4xl:             clamp(2.4rem, 1.8rem + 3vw, 3.5rem);
+
+    /* ▸ Espaciado (escala 4px) */
+    --av-space-xs:             4px;
+    --av-space-sm:             8px;
+    --av-space-md:             16px;
+    --av-space-lg:             24px;
+    --av-space-xl:             32px;
+    --av-space-2xl:            48px;
+    --av-space-3xl:            64px;
+    --av-space-4xl:            96px;
+    --av-space-section:        120px;
+
+    /* ▸ Radios — estándar 4px */
+    --av-radius-sm:            2px;
+    --av-radius-md:            4px;
+    --av-radius-lg:            8px;
+    --av-radius-full:          9999px;
+
+    /* ▸ Sombras */
+    --av-shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.04);
+    --av-shadow-md:            0 4px 16px rgba(0, 0, 0, 0.06);
+    --av-shadow-lg:            0 8px 32px rgba(0, 0, 0, 0.08);
+    --av-shadow-xl:            0 16px 48px rgba(0, 0, 0, 0.10);
+
+    /* ▸ Transiciones */
+    --av-transition:           300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ▸ Layout */
+    --av-container-max:        1200px;
+    --av-container-narrow:     800px;
+    --av-container-padding:    24px;
+}
+
+/* ─── 2. TIPOGRAFÍA GLOBAL ─────────────────────────────────── */
+
+/* ─── 3. ELEMENTOS BASE ────────────────────────────────────── */
+body {
+    font-family: var(--av-font-body);
+    font-size: var(--av-text-base);
+    line-height: 1.7;
+    color: var(--av-color-texto);
+    background-color: var(--av-color-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ▸ Headings — Oswald uppercase */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--av-font-heading);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--av-color-texto);
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+}
+
+h1 { font-size: var(--av-text-4xl); font-weight: 700; letter-spacing: 0; }
+h2 { font-size: var(--av-text-3xl); }
+h3 { font-size: var(--av-text-2xl); }
+h4 { font-size: var(--av-text-xl); }
+h5 { font-size: var(--av-text-lg); }
+h6 { font-size: var(--av-text-base); }
+
+/* ▸ Links */
+a {
+    color: var(--av-color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color var(--av-transition), text-decoration-color var(--av-transition);
+}
+
+a:hover {
+    color: var(--av-color-accent-hover);
+    text-decoration-thickness: 2px;
+}
+
+/* ▸ Paragraphs */
+p {
+    margin-top: 0;
+    margin-bottom: 1.2em;
+    max-width: 70ch;
+}
+
+p + p {
+    margin-top: 1.2em;
+}
+
+/* ▸ Lists */
+ul, ol {
+    padding-left: 1.5em;
+}
+
+li {
+    margin-bottom: 0.4em;
+}
+
+/* ▸ Separador visual */
+hr {
+    border: none;
+    height: 1px;
+    background: var(--av-color-border);
+    margin: var(--av-space-3xl) 0;
+}
+
+.av-section-dark hr {
+    background: var(--av-color-dark-border);
+}
+
+/* ▸ Selection */
+::selection {
+    background: var(--av-color-accent);
+    color: white;
+}
+
+/* ▸ Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ─── 4. BOTONES ───────────────────────────────────────────── */
+.av-btn,
+.elementor-button {
+    font-family: var(--av-font-body);
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    padding: 12px 24px;
+    border-radius: var(--av-radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all var(--av-transition);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--av-space-sm);
+    text-decoration: none;
+}
+
+.av-btn-primary {
+    background: var(--av-color-accent);
+    color: white;
+}
+
+.av-btn-primary:hover {
+    background: var(--av-color-accent-hover);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--av-shadow-md);
+}
+
+.av-btn-outline {
+    background: transparent;
+    color: var(--av-color-accent);
+    border: 2px solid var(--av-color-accent);
+}
+
+.av-btn-outline:hover {
+    background: var(--av-color-accent-light);
+    color: var(--av-color-accent-hover);
+    border-color: var(--av-color-accent-hover);
+}
+
+.av-btn-ghost {
+    background: transparent;
+    color: var(--av-color-texto);
+    border: 1px solid var(--av-color-border);
+}
+
+.av-btn-ghost:hover {
+    border-color: var(--av-color-texto);
+    background: var(--av-color-surface-alt);
+}
+
+.av-btn-muted {
+    background: var(--av-color-surface-alt);
+    color: var(--av-color-muted);
+}
+
+.av-btn-dark {
+    background: var(--av-color-dark);
+    color: var(--av-color-dark-text);
+}
+
+/* ─── 5. TARJETAS ──────────────────────────────────────────── */
+.av-card {
+    background: var(--av-color-blanco);
+    border-radius: var(--av-radius-md);
+    padding: var(--av-space-xl);
+    box-shadow: var(--av-shadow-sm);
+    border: 1px solid var(--av-color-border);
+    transition: box-shadow var(--av-transition), transform var(--av-transition);
+}
+
+.av-card:hover {
+    box-shadow: var(--av-shadow-md);
+    transform: translateY(-2px);
+    border-color: transparent;
+}
+
+.av-card-title {
+    font-family: var(--av-font-heading);
+    font-size: var(--av-text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: var(--av-space-sm);
+}
+
+.av-card-meta {
+    font-family: var(--av-font-mono);
+    font-size: 0.48rem;
+    color: var(--av-color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: var(--av-space-sm);
+}
+
+/* ─── 6. PULL QUOTES & BLOCKQUOTES ─────────────────────────── */
+blockquote,
+.av-pull-quote {
+    font-family: var(--av-font-heading);
+    font-size: var(--av-text-xl);
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--av-color-texto);
+    border-left: 3px solid var(--av-color-accent);
+    padding-left: var(--av-space-lg);
+    margin: var(--av-space-2xl) 0;
+}
+
+blockquote cite,
+.av-pull-quote cite {
+    display: block;
+    margin-top: var(--av-space-sm);
+    font-family: var(--av-font-mono);
+    font-size: 0.55rem;
+    font-style: normal;
+    color: var(--av-color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Quote en sección oscura — sin acento de color */
+.av-section-dark blockquote {
+    border-left-color: #555;
+    color: var(--av-color-dark-text);
+}
+
+/* ─── 7. SECCIONES OSCURAS ─────────────────────────────────── */
+.av-section-dark {
+    background: var(--av-color-dark);
+    color: var(--av-color-dark-muted);
+}
+
+.av-section-dark h1,
+.av-section-dark h2,
+.av-section-dark h3,
+.av-section-dark h4 {
+    color: var(--av-color-dark-text);
+}
+
+.av-section-dark .av-card {
+    background: #2A2A2A;
+    border-color: #333;
+}
+
+.av-section-dark .av-card-meta {
+    color: var(--av-color-muted);
+}
+
+/* ─── 8. NAVEGACIÓN ────────────────────────────────────────── */
+.av-header {
+    background: rgba(250, 250, 248, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--av-color-border);
+    padding: 0 var(--av-container-padding);
+}
+
+/* ─── 9. HERO ──────────────────────────────────────────────── */
+.av-hero {
+    padding: var(--av-space-4xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.av-hero-content {
+    max-width: var(--av-container-narrow);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.av-hero-title {
+    font-size: var(--av-text-4xl);
+    font-weight: 700;
+    margin-bottom: var(--av-space-lg);
+}
+
+.av-hero-subtitle {
+    font-size: var(--av-text-lg);
+    color: var(--av-color-muted);
+    font-family: var(--av-font-body);
+    font-weight: 300;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Año gigante como textura de fondo */
+.av-hero-year {
+    position: absolute;
+    font-family: var(--av-font-heading);
+    font-size: clamp(5rem, 20vw, 12rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--av-color-texto);
+    opacity: 0.03;
+    right: -10px;
+    bottom: -20px;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.av-hero-meta {
+    display: inline-block;
+    font-family: var(--av-font-mono);
+    font-size: var(--av-text-xs);
+    color: var(--av-color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: var(--av-space-md);
+    padding: 4px 12px;
+    border: 1px solid var(--av-color-border);
+    border-radius: var(--av-radius-md);
+}
+
+/* Hero en sección oscura */
+.av-section-dark.av-hero {
+    background: var(--av-color-dark);
+}
+
+.av-section-dark.av-hero .av-hero-title {
+    color: white;
+}
+
+.av-section-dark.av-hero .av-hero-subtitle {
+    color: var(--av-color-dark-muted);
+}
+
+.av-section-dark.av-hero .av-hero-year {
+    color: white;
+    opacity: 0.03;
+}
+
+.av-section-dark.av-hero .av-hero-meta {
+    color: var(--av-color-muted);
+    border-color: #333;
+}
+
+/* ─── 10. FOOTER ───────────────────────────────────────────── */
+.av-footer {
+    padding: var(--av-space-3xl) 0;
+    border-top: 1px solid var(--av-color-border);
+    background: var(--av-color-blanco);
+    font-size: var(--av-text-sm);
+    color: var(--av-color-muted);
+}
+
+.av-footer-inner {
+    max-width: var(--av-container-max);
+    margin: 0 auto;
+    padding: 0 var(--av-container-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--av-space-md);
+}
+
+/* ─── 11. UTILIDADES ───────────────────────────────────────── */
+.av-container {
+    max-width: var(--av-container-max);
+    margin: 0 auto;
+    padding: 0 var(--av-container-padding);
+}
+
+.av-container-narrow {
+    max-width: var(--av-container-narrow);
+    margin: 0 auto;
+    padding: 0 var(--av-container-padding);
+}
+
+.av-section {
+    padding: var(--av-space-section) 0;
+}
+
+.av-text-center { text-align: center; }
+.av-text-mono { font-family: var(--av-font-mono); }
+.av-text-muted { color: var(--av-color-muted); }
+.av-text-sm { font-size: var(--av-text-sm); }
+.av-text-xs { font-size: var(--av-text-xs); }
+.av-text-uppercase { text-transform: uppercase; letter-spacing: 0.04em; }
+.av-text-tracking { letter-spacing: 0.12em; }
+
+/* Badge / etiqueta metadata */
+.av-badge {
+    display: inline-block;
+    font-family: var(--av-font-mono);
+    font-size: var(--av-text-xs);
+    color: var(--av-color-accent);
+    background: var(--av-color-accent-light);
+    padding: 3px 10px;
+    border-radius: var(--av-radius-md);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* Tags (filtros, categorías) */
+.av-tag {
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: var(--av-radius-md);
+    display: inline-block;
+}
+
+.av-tag-accent { background: var(--av-color-accent-light); color: var(--av-color-accent); }
+.av-tag-muted  { background: var(--av-color-surface-alt); color: var(--av-color-muted); }
+.av-tag-line   { background: transparent; color: var(--av-color-muted); border: 1px solid var(--av-color-border); }
+
+/* Fecha en JetBrains Mono */
+.av-date-label {
+    font-family: var(--av-font-mono);
+    font-size: 0.6rem;
+    color: var(--av-color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Divider */
+.av-divider {
+    height: 1px;
+    background: var(--av-color-border);
+    margin: var(--av-space-2xl) 0;
+    border: none;
+}
+
+.av-section-dark .av-divider {
+    background: var(--av-color-dark-border);
+}
+
+/* ─── 12. RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 768px) {
+    :root {
+        --av-container-padding: 16px;
+        --av-space-section: 64px;
+    }
+
+    h1 { font-size: var(--av-text-2xl); }
+    h2 { font-size: var(--av-text-xl); }
+
+    blockquote {
+        font-size: var(--av-text-lg);
+        padding-left: var(--av-space-md);
+    }
+
+    .av-card {
+        padding: var(--av-space-md);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --av-space-section: 48px;
+    }
+
+    .av-hero {
+        padding: var(--av-space-2xl) 0;
+    }
+
+    .av-footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -1,0 +1,324 @@
+/* ============================================================
+   📜 TIMELINE — Scroll Storytelling
+   Líneas de tiempo animadas con Intersection Observer
+   ============================================================ */
+
+/* ─── Contenedor base ─────────────────────────────────────── */
+.av-timeline {
+    position: relative;
+    padding: var(--av-space-2xl) 0;
+}
+
+/* Línea vertical central (conector) */
+.av-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--av-color-border) 5%,
+        var(--av-color-border) 95%,
+        transparent 100%
+    );
+}
+
+/* ─── Cada ítem de la timeline ────────────────────────────── */
+.av-timeline-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    position: relative;
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.av-timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.av-timeline-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.av-timeline-item:nth-child(odd) {
+    flex-direction: row;
+    padding-right: calc(50% + 40px);
+    text-align: right;
+}
+
+.av-timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+    padding-left: calc(50% + 40px);
+    text-align: left;
+}
+
+/* ─── Punto en la línea central ───────────────────────────── */
+.av-timeline-dot {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--av-color-accent);
+    border: 3px solid var(--av-color-bg);
+    box-shadow: 0 0 0 2px var(--av-color-accent);
+    z-index: 2;
+    transition: transform 0.4s ease, background 0.4s ease;
+}
+
+.av-timeline-item.is-visible .av-timeline-dot {
+    transform: translateX(-50%) scale(1.2);
+    background: var(--av-color-accent-hover);
+    box-shadow: 0 0 0 3px var(--av-color-accent-hover);
+}
+
+/* ─── Contenido del ítem ──────────────────────────────────── */
+.av-timeline-content {
+    flex: 0 0 40%;
+    background: var(--av-color-blanco);
+    border-radius: var(--av-radius-md);
+    padding: var(--av-space-lg) var(--av-space-xl);
+    box-shadow: var(--av-shadow-sm);
+    border: 1px solid var(--av-color-border);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    position: relative;
+}
+
+.av-timeline-content:hover {
+    box-shadow: var(--av-shadow-md);
+    transform: translateY(-2px);
+}
+
+.av-timeline-content::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    width: 12px;
+    height: 12px;
+    background: var(--av-color-blanco);
+    border: 1px solid var(--av-color-border);
+    transform: rotate(45deg);
+    z-index: 1;
+}
+
+.av-timeline-item:nth-child(odd) .av-timeline-content::after {
+    right: -7px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.av-timeline-item:nth-child(even) .av-timeline-content::after {
+    left: -7px;
+    border-right: none;
+    border-top: none;
+}
+
+/* ─── Fecha del evento ────────────────────────────────────── */
+.av-timeline-date {
+    font-family: var(--av-font-mono);
+    font-size: 0.6rem;
+    color: var(--av-color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: var(--av-space-sm);
+}
+
+/* ─── Título del evento ───────────────────────────────────── */
+.av-timeline-title {
+    font-family: var(--av-font-heading);
+    font-size: var(--av-text-base);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 var(--av-space-sm);
+    line-height: 1.3;
+}
+
+/* ─── Descripción ─────────────────────────────────────────── */
+.av-timeline-desc {
+    font-size: var(--av-text-sm);
+    color: var(--av-color-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ─── Media ───────────────────────────────────────────────── */
+.av-timeline-media {
+    margin-top: var(--av-space-md);
+    border-radius: var(--av-radius-sm);
+    overflow: hidden;
+}
+
+.av-timeline-media img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.av-timeline-media:hover img {
+    transform: scale(1.02);
+}
+
+.av-timeline-media audio {
+    width: 100%;
+    margin-top: var(--av-space-sm);
+}
+
+.av-timeline-media video {
+    width: 100%;
+}
+
+/* ─── TIPO: HORIZONTAL ────────────────────────────────────── */
+.av-timeline[data-type="horizontal"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: var(--av-space-2xl) 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.av-timeline[data-type="horizontal"]::before {
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    height: 2px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        var(--av-color-border) 3%,
+        var(--av-color-border) 97%,
+        transparent 100%
+    );
+}
+
+.av-timeline[data-type="horizontal"] .av-timeline-track {
+    display: flex;
+    gap: var(--av-space-xl);
+    padding: 0 var(--av-container-padding);
+    min-width: min-content;
+}
+
+.av-timeline[data-type="horizontal"] .av-timeline-item {
+    flex: 0 0 280px;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 !important;
+    margin-bottom: 0;
+    scroll-snap-align: start;
+}
+
+.av-timeline[data-type="horizontal"] .av-timeline-dot {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin: 0 auto var(--av-space-md);
+}
+
+.av-timeline[data-type="horizontal"] .av-timeline-content {
+    flex: none;
+    width: 100%;
+}
+
+.av-timeline[data-type="horizontal"] .av-timeline-content::after {
+    display: none;
+}
+
+/* ─── Animaciones de entrada escalonadas ──────────────────── */
+.av-timeline-item:nth-child(1) { transition-delay: 0.0s; }
+.av-timeline-item:nth-child(2) { transition-delay: 0.1s; }
+.av-timeline-item:nth-child(3) { transition-delay: 0.2s; }
+.av-timeline-item:nth-child(4) { transition-delay: 0.3s; }
+.av-timeline-item:nth-child(5) { transition-delay: 0.4s; }
+.av-timeline-item:nth-child(6) { transition-delay: 0.5s; }
+.av-timeline-item:nth-child(7) { transition-delay: 0.6s; }
+.av-timeline-item:nth-child(8) { transition-delay: 0.7s; }
+
+/* ─── Timeline en sección oscura ──────────────────────────── */
+.av-section-dark .av-timeline::before {
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--av-color-dark-border) 5%,
+        var(--av-color-dark-border) 95%,
+        transparent 100%
+    );
+}
+
+.av-section-dark .av-timeline-content {
+    background: #2A2A2A;
+    border-color: var(--av-color-dark-border);
+}
+
+.av-section-dark .av-timeline-content::after {
+    background: #2A2A2A;
+    border-color: var(--av-color-dark-border);
+}
+
+.av-section-dark .av-timeline-title {
+    color: var(--av-color-dark-text);
+}
+
+.av-section-dark .av-timeline-desc {
+    color: var(--av-color-dark-muted);
+}
+
+.av-section-dark .av-timeline-dot {
+    border-color: var(--av-color-dark);
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .av-timeline::before {
+        left: 20px;
+    }
+
+    .av-timeline-item,
+    .av-timeline-item:nth-child(odd),
+    .av-timeline-item:nth-child(even) {
+        flex-direction: column;
+        padding: 0 0 0 50px !important;
+        text-align: left !important;
+    }
+
+    .av-timeline-dot {
+        left: 20px;
+        top: 6px;
+        transform: translateX(-50%);
+    }
+
+    .av-timeline-item.is-visible .av-timeline-dot {
+        transform: translateX(-50%) scale(1.2);
+    }
+
+    .av-timeline-content {
+        flex: none;
+        width: 100%;
+    }
+
+    .av-timeline-content::after {
+        display: none;
+    }
+
+    .av-timeline-item {
+        margin-bottom: 48px;
+    }
+
+    .av-timeline[data-type="horizontal"] .av-timeline-item {
+        flex: 0 0 220px;
+    }
+}

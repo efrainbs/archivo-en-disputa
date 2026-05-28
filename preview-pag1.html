@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tacna y Arica · Archivo en disputa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --av-color-bg: #FAFAF8;
+            --av-color-blanco: #FFFFFF;
+            --av-color-texto: #1A1A1A;
+            --av-color-muted: #999;
+            --av-color-border: #ECECEC;
+            --av-color-dark: #1E1E1E;
+            --av-color-dark-text: #E0E0E0;
+            --av-color-dark-muted: #888;
+            --av-color-accent: #4E6B4E;
+            --av-color-accent-light: #EDF2ED;
+            --av-font-heading: 'Oswald', sans-serif;
+            --av-font-body: 'Source Sans 3', sans-serif;
+            --av-font-mono: 'JetBrains Mono', monospace;
+            --av-space-sm: 8px;
+            --av-space-md: 16px;
+            --av-space-lg: 24px;
+            --av-space-xl: 32px;
+            --av-space-2xl: 48px;
+            --av-space-3xl: 64px;
+            --av-space-section: 100px;
+            --av-radius-md: 4px;
+            --av-container-padding: 48px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--av-font-body);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--av-color-texto);
+            background: var(--av-color-bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--av-font-heading);
+            font-weight: 600;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+            color: var(--av-color-texto);
+        }
+
+        p { max-width: 70ch; }
+        a { color: var(--av-color-accent); text-decoration: none; }
+        a:hover { opacity: 0.7; }
+
+        /* ─── NAVBAR ─── */
+        .av-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px var(--av-container-padding);
+            pointer-events: none;
+            transition: background 0.4s ease, padding 0.3s ease;
+        }
+        .av-nav.scrolled {
+            background: rgba(30,30,30,0.92);
+            backdrop-filter: blur(12px);
+            padding: 16px var(--av-container-padding);
+        }
+        .av-nav-logo {
+            font-family: var(--av-font-heading);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #fff;
+            text-decoration: none;
+            pointer-events: auto;
+        }
+        .av-nav-links {
+            display: flex;
+            gap: var(--av-space-xl);
+            list-style: none;
+            pointer-events: auto;
+        }
+        .av-nav-links li {
+            opacity: 0;
+            animation: fadeInDown 0.5s ease-out forwards;
+        }
+        .av-nav-links li:nth-child(1) { animation-delay: 0.1s; }
+        .av-nav-links li:nth-child(2) { animation-delay: 0.2s; }
+        .av-nav-links li:nth-child(3) { animation-delay: 0.3s; }
+        .av-nav-links li:nth-child(4) { animation-delay: 0.4s; }
+        .av-nav-links a {
+            font-family: var(--av-font-mono);
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            text-decoration: none;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .av-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--av-color-accent);
+            transition: width 0.3s ease;
+        }
+        .av-nav-links a:hover {
+            color: #fff;
+        }
+        .av-nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ─── CONTAINERS ─── */
+        .av-container {
+            padding: 0 var(--av-container-padding);
+        }
+
+        /* ─── HERO ─── */
+        .av-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 650px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+        }
+        .av-hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            animation: heroZoom 1.5s ease-out forwards;
+        }
+        .av-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+        .av-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
+            z-index: 1;
+        }
+        .av-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 var(--av-container-padding) 12vh;
+            width: 100%;
+        }
+        .av-hero-content > * {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .av-hero-content .av-hero-label { animation-delay: 0.2s; }
+        .av-hero-content .av-hero-title { animation-delay: 0.4s; }
+        .av-hero-content .av-hero-sub  { animation-delay: 0.6s; }
+        .av-hero-label {
+            font-family: var(--av-font-mono);
+            font-size: 0.7rem;
+            color: var(--av-color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: var(--av-space-md);
+            opacity: 0.8;
+        }
+        .av-hero-title {
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            max-width: 900px;
+            margin-bottom: var(--av-space-lg);
+        }
+        .av-hero-sub {
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
+            color: rgba(255,255,255,0.65);
+            font-weight: 300;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        /* ─── SECTION ─── */
+        .av-section { padding: var(--av-space-section) 0; }
+        .av-section-dark { background: var(--av-color-dark); }
+        .av-section-dark, .av-section-dark .av-section-text { color: var(--av-color-dark-muted); }
+        .av-section-dark h2, .av-section-dark h3 { color: var(--av-color-dark-text); }
+
+        .av-section-label {
+            font-family: var(--av-font-mono);
+            font-size: 0.65rem;
+            color: var(--av-color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: var(--av-space-sm);
+            display: block;
+        }
+        .av-section-dark .av-section-label { color: var(--av-color-dark-muted); }
+
+        .av-section-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: var(--av-space-xl);
+            max-width: 800px;
+            position: relative;
+            padding-bottom: var(--av-space-md);
+        }
+        .av-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            max-width: 80vw;
+            height: 2px;
+            background: var(--av-color-accent);
+            transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .av-reveal.is-visible .av-section-title::after {
+            width: 80vw;
+        }
+        .av-section-dark .av-section-title::after {
+            background: #555;
+        }
+
+        .av-section-text {
+            font-size: 1rem;
+            color: var(--av-color-muted);
+            line-height: 1.8;
+            margin-bottom: 1.2em;
+        }
+
+        /* ─── SPLIT: SLIDER LEFT + TEXT RIGHT ─── */
+        .av-split {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: var(--av-space-3xl);
+            align-items: start;
+        }
+        .av-split-text {
+            max-width: 540px;
+        }
+
+        /* ─── SLIDER (single slide carousel) ─── */
+        .av-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--av-radius-md);
+        }
+        .av-slider-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+        }
+        .av-slider-slide {
+            flex: 0 0 100%;
+            max-width: 100%;
+            line-height: 0;
+        }
+        .av-slider-slide .av-img-mock {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--av-font-mono);
+            font-size: 0.7rem;
+            color: var(--av-color-muted);
+            line-height: 1.5;
+            text-align: center;
+            background: var(--av-color-border);
+            border-radius: var(--av-radius-md);
+            transition: transform 0.4s ease;
+        }
+        .av-slider-slide .av-img-mock:hover {
+            transform: scale(1.02);
+        }
+        .av-section-dark .av-slider-slide .av-img-mock { background: #2A2A2A; color: #555; }
+        .av-slider-caption {
+            font-family: var(--av-font-mono);
+            font-size: 0.5rem;
+            color: var(--av-color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            line-height: 1.4;
+            padding: var(--av-space-sm) 0;
+        }
+        .av-slider-caption strong { color: var(--av-color-texto); font-weight: 500; }
+        .av-section-dark .av-slider-caption { color: var(--av-color-dark-muted); }
+        .av-section-dark .av-slider-caption strong { color: var(--av-color-dark-text); }
+
+        .av-slider-btn {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            z-index: 10;
+            width: 44px; height: 44px;
+            border: none;
+            background: rgba(255,255,255,0.9);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--av-color-texto);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .av-slider:hover .av-slider-btn { opacity: 1; }
+        .av-slider-btn:hover { background: #fff; }
+        .av-slider-btn-prev { left: var(--av-space-sm); }
+        .av-slider-btn-next { right: var(--av-space-sm); }
+
+        .av-slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: var(--av-space-sm);
+        }
+        .av-slider-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            border: none;
+            background: var(--av-color-border);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .av-slider-dot.active { background: var(--av-color-accent); }
+        .av-section-dark .av-slider-dot { background: #333; }
+        .av-section-dark .av-slider-dot.active { background: #666; }
+
+        /* ─── HORIZONTAL CARRUSEL ─── */
+        .av-carrusel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: var(--av-radius-md);
+            margin: var(--av-space-2xl) 0;
+        }
+        .av-carrusel-track {
+            display: flex;
+            gap: var(--av-space-md);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+        }
+        .av-carrusel-slide {
+            flex: 0 0 calc(50% - var(--av-space-md) / 2);
+            line-height: 0;
+        }
+        .av-carrusel-slide .av-img-mock {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--av-font-mono);
+            font-size: 0.7rem;
+            color: var(--av-color-muted);
+            line-height: 1.5;
+            text-align: center;
+            background: var(--av-color-border);
+            border-radius: var(--av-radius-md);
+            transition: transform 0.4s ease;
+        }
+        .av-carrusel-slide .av-img-mock:hover {
+            transform: scale(1.02);
+        }
+        .av-carrusel-caption {
+            font-family: var(--av-font-mono);
+            font-size: 0.5rem;
+            color: var(--av-color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: var(--av-space-sm) 0;
+        }
+        .av-carrusel-caption strong { color: var(--av-color-texto); font-weight: 500; }
+
+        .av-carrusel-btn {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            z-index: 10;
+            width: 44px; height: 44px;
+            border: none;
+            background: rgba(255,255,255,0.9);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--av-color-texto);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .av-carrusel:hover .av-carrusel-btn { opacity: 1; }
+        .av-carrusel-btn:hover { background: #fff; }
+        .av-carrusel-btn-prev { left: var(--av-space-sm); }
+        .av-carrusel-btn-next { right: var(--av-space-sm); }
+
+        /* ─── PULL QUOTE ─── */
+        .av-pull-quote {
+            font-family: var(--av-font-heading);
+            font-size: clamp(1.3rem, 2.5vw, 2rem);
+            font-weight: 500;
+            text-transform: uppercase;
+            line-height: 1.15;
+            letter-spacing: 0.02em;
+            color: var(--av-color-texto);
+            padding: var(--av-space-xl) 0;
+            max-width: 700px;
+        }
+        .av-pull-quote cite {
+            display: block;
+            margin-top: var(--av-space-md);
+            font-family: var(--av-font-mono);
+            font-size: 0.6rem;
+            font-style: normal;
+            color: var(--av-color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .av-section-dark .av-pull-quote { color: var(--av-color-dark-text); }
+        .av-section-dark .av-pull-quote cite { color: var(--av-color-dark-muted); }
+
+        /* ─── STATS ─── */
+        .av-stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--av-space-xl);
+            margin-bottom: var(--av-space-xl);
+        }
+        .av-stat-num {
+            font-family: var(--av-font-heading);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            color: var(--av-color-texto);
+            line-height: 1;
+        }
+        .av-stat-label {
+            font-family: var(--av-font-mono);
+            font-size: 0.6rem;
+            color: var(--av-color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: var(--av-space-xs);
+        }
+        .av-section-dark .av-stat-num { color: var(--av-color-dark-text); }
+
+        /* ─── BADGE ─── */
+        .av-badge {
+            display: inline-block;
+            font-family: var(--av-font-mono);
+            font-size: 0.55rem;
+            color: var(--av-color-accent);
+            background: var(--av-color-accent-light);
+            padding: 4px 14px;
+            border-radius: var(--av-radius-md);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+        .av-section-dark .av-badge { background: #2A2A2A; color: var(--av-color-muted); }
+
+        /* ─── META ─── */
+        .av-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: var(--av-space-xl);
+            padding: var(--av-space-xl) 0;
+            border-top: 1px solid var(--av-color-border);
+            margin: var(--av-space-2xl) 0;
+        }
+        .av-meta-item-label {
+            font-family: var(--av-font-mono);
+            font-size: 0.55rem;
+            color: var(--av-color-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: var(--av-space-sm);
+        }
+        .av-meta-item-value { font-size: 0.85rem; color: var(--av-color-texto); line-height: 1.5; }
+        .av-section-dark .av-meta { border-top-color: #333; }
+        .av-section-dark .av-meta-item-value { color: var(--av-color-dark-text); }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes heroZoom {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .av-reveal {
+            opacity: 0; transform: translateY(24px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .av-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        .av-pull-quote {
+            opacity: 0; transform: translateX(-20px);
+            transition: opacity 0.6s ease-out 0.15s, transform 0.6s ease-out 0.15s;
+        }
+        .av-pull-quote.is-visible { opacity: 1; transform: translateX(0); }
+
+        .av-stat-num {
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .av-stat-num.is-visible { opacity: 1; transform: translateY(0); }
+
+        .av-meta {
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s;
+        }
+        .av-meta.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1000px) {
+            .av-split { grid-template-columns: 1fr; gap: var(--av-space-xl); }
+            .av-carrusel-slide { flex: 0 0 calc(100% - var(--av-space-md)); }
+            .av-split-text { max-width: 100%; }
+            .av-hero-title { font-size: clamp(2.5rem, 12vw, 4.5rem); }
+            .av-hero-content { padding-bottom: 8vh; }
+            :root { --av-container-padding: 24px; --av-space-section: 60px; }
+            .av-slider-btn, .av-carrusel-btn { width: 36px; height: 36px; font-size: 1rem; }
+        }
+        @media (max-width: 600px) {
+            .av-stat-grid { grid-template-columns: 1fr; }
+            .av-hero { min-height: 70vh; }
+            .av-hero-title { font-size: 2.5rem; }
+            .av-slider-btn, .av-carrusel-btn { display: none; }
+            .av-nav-links { display: none; }
+            .av-nav-logo { font-size: 0.7rem; }
+            .av-footer-grid { grid-template-columns: 1fr; }
+            .av-footer-bottom { flex-direction: column; text-align: center; }
+        }
+
+        /* ─── FOOTER ─── */
+        .av-footer {
+            background: var(--av-color-dark);
+            color: var(--av-color-dark-text);
+            border-top: 3px solid var(--av-color-accent);
+        }
+        .av-footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--av-space-3xl) var(--av-container-padding) var(--av-space-xl);
+        }
+        .av-footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: var(--av-space-2xl);
+            margin-bottom: var(--av-space-2xl);
+        }
+        .av-footer-brand {
+            font-family: var(--av-font-heading);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #fff;
+            display: block;
+            margin-bottom: var(--av-space-md);
+        }
+        .av-footer-desc {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--av-color-dark-muted);
+            max-width: 45ch;
+        }
+        .av-footer-desc em { color: var(--av-color-dark-text); font-style: italic; }
+        .av-footer-heading {
+            font-family: var(--av-font-heading);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #fff;
+            display: block;
+            margin-bottom: var(--av-space-md);
+        }
+        .av-footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: var(--av-space-sm);
+        }
+        .av-footer-links a {
+            font-size: 0.85rem;
+            color: var(--av-color-dark-muted);
+            transition: color 0.2s ease;
+        }
+        .av-footer-links a:hover { color: #fff; opacity: 1; }
+        .av-footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--av-space-lg);
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-family: var(--av-font-mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--av-color-dark-muted);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="av-nav">
+    <a href="#" class="av-nav-logo">Archivo en disputa</a>
+    <ul class="av-nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#contexto">Tacna y Arica</a></li>
+        <li><a href="#preservacion">Estímulo Preservación</a></li>
+        <li><a href="#">Perfiles y proyectos</a></li>
+    </ul>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="inicio" class="av-hero">
+    <div class="av-hero-bg">
+        <div class="av-img-mock" style="width:100%;height:100%;background:#222;display:flex;align-items:center;justify-content:center;color:#444;font-family:var(--av-font-mono);font-size:0.8rem;letter-spacing:0.1em;">FOTOGRAFÍA HERO · TACNA 1925</div>
+    </div>
+    <div class="av-hero-overlay"></div>
+    <div class="av-hero-content">
+        <div class="av-hero-label">Archivo en disputa</div>
+        <h1 class="av-hero-title">Tacna y Arica</h1>
+        <p class="av-hero-sub">Regímenes de valor y nuevos usos de la película de Renée Oro (1925), beneficiaria del concurso nacional de proyectos de preservación audiovisual.</p>
+    </div>
+</section>
+
+<!-- ═══════════════ CONTEXTO ═══════════════ -->
+<section id="contexto" class="av-section">
+    <div class="av-container av-reveal">
+        <span class="av-section-label">1924–1925</span>
+        <h2 class="av-section-title">Contexto de creación</h2>
+    </div>
+
+    <div class="av-container">
+        <div class="av-split">
+            <div>
+                <div class="av-slider" data-slider>
+                    <div class="av-slider-track">
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">🎞️ Fotograma — Tacna y Arica, 1925</div>
+                            <div class="av-slider-caption"><strong>Fotograma</strong> — Tacna y Arica, 1925 / Fuente: Archivo</div>
+                        </div>
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">📷 Renée Oro — Cineasta argentina</div>
+                            <div class="av-slider-caption"><strong>Renée Oro</strong> — Cineasta argentina / Fuente: Mafud et al.</div>
+                        </div>
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">📰 El Diario Ilustrado — Santiago, 1924</div>
+                            <div class="av-slider-caption"><strong>El Diario Ilustrado</strong> — Santiago, 1924 / Fuente: Fotopolska</div>
+                        </div>
+                    </div>
+                    <button class="av-slider-btn av-slider-btn-prev" data-slider-prev>‹</button>
+                    <button class="av-slider-btn av-slider-btn-next" data-slider-next>›</button>
+                </div>
+                <div class="av-slider-dots" data-slider-dots></div>
+            </div>
+            <div class="av-split-text">
+                <p class="av-section-text">La película <em>Tacna y Arica</em> fue una obra propagandística creada por encargo del gobierno chileno durante el periodo en que controlaba ambas ciudades, con el objetivo de influir en la decisión final sobre su soberanía. Fue dirigida por <strong>Renée Oro</strong>, cineasta argentina del cine mudo de la que solo se conocen tres obras.</p>
+                <p class="av-section-text">En Perú, la única copia conocida se encontraba en custodia del historiador Luis Cavagnaro Orellana en la ciudad de Tacna. Tras décadas de inmovilidad y a 100 años de su creación, fue incorporada a un proyecto de preservación.</p>
+                <div class="av-pull-quote">
+                    No solamente el espectador verá los hermosos paisajes de esa zona semi-tropical, sino que conocerá su sociabilidad, su industria y comercio
+                    <cite>— El Diario Ilustrado, Santiago de Chile, 1924</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ CUSTODIO ═══════════════ -->
+<section id="custodio" class="av-section">
+    <div class="av-container av-reveal">
+        <span class="av-section-label">Custodia</span>
+        <h2 class="av-section-title">La obra y su custodio</h2>
+    </div>
+
+    <div class="av-container">
+        <div class="av-split">
+            <div>
+                <div class="av-slider" data-slider>
+                    <div class="av-slider-track">
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">📷 Luis Cavagnaro Orellana<br>Historiador tacneño</div>
+                            <div class="av-slider-caption"><strong>Luis Cavagnaro</strong> — Historiador tacneño / Fuente: Archivo</div>
+                        </div>
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">📄 Acuerdo notarial<br>Red × Cavagnaro · 2018</div>
+                            <div class="av-slider-caption"><strong>Acuerdo notarial</strong> — Red × Cavagnaro / Fuente: Archivo</div>
+                        </div>
+                    </div>
+                    <button class="av-slider-btn av-slider-btn-prev" data-slider-prev>‹</button>
+                    <button class="av-slider-btn av-slider-btn-next" data-slider-next>›</button>
+                </div>
+                <div class="av-slider-dots" data-slider-dots></div>
+            </div>
+            <div class="av-split-text">
+                <p class="av-section-text"><strong>Luis Cavagnaro Orellana</strong>, historiador tacneño reconocido por su amplia trayectoria académica y cultural, recibió la película en los años ochenta de una familia propietaria de cines en Tacna y la resguardó durante décadas como parte de su archivo personal.</p>
+                <p class="av-section-text">En 2018, durante la residencia artística Transfrontera, Cavagnaro presentó parte del material a miembros que luego integrarían la Red de Archivos Fílmicos del Sur Peruano. Surgieron tensiones cuando se planteó que el material saliera de Tacna para su digitalización. Se alcanzó un acuerdo formal notariado que integró a Cavagnaro como colaborador. Su fallecimiento, sin haber visto la película restaurada, marcó este proceso como un aprendizaje doloroso.</p>
+                <div class="av-pull-quote">
+                    Ambicionamos muchas cosas sin realmente dimensionar lo que iba a costar hacer todo eso y lo complicado que era
+                    <cite>— Edward de Ybarra</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ PRESERVACIÓN ═══════════════ -->
+<section id="preservacion" class="av-section">
+    <div class="av-container av-reveal">
+        <span class="av-section-label">2019–2022</span>
+        <h2 class="av-section-title">El proyecto de preservación</h2>
+    </div>
+
+    <div class="av-container">
+        <div class="av-carrusel" data-carrusel>
+            <div class="av-carrusel-track">
+                <div class="av-carrusel-slide">
+                    <div class="av-img-mock" style="aspect-ratio:16/9;">📋 Proyecto EPA — DAFO<br>Estímulo a la Preservación Audiovisual</div>
+                    <div class="av-carrusel-caption"><strong>Proyecto EPA</strong> — Estímulo a la Preservación Audiovisual / Fuente: Archivo</div>
+                </div>
+                <div class="av-carrusel-slide">
+                    <div class="av-img-mock" style="aspect-ratio:16/9;">👥 Equipo de trabajo<br>7 miembros iniciales, 3 culminaron</div>
+                    <div class="av-carrusel-caption"><strong>Equipo</strong> — Miembros del proyecto / Fuente: Archivo</div>
+                </div>
+                <div class="av-carrusel-slide">
+                    <div class="av-img-mock" style="aspect-ratio:16/9;">🏛️ DAFO — Ministerio de Cultura<br>Financista, supervisor, mediador</div>
+                    <div class="av-carrusel-caption"><strong>DAFO</strong> — Dirección del Audiovisual, la Fonografía y los Nuevos Medios / Fuente: Archivo</div>
+                </div>
+            </div>
+            <button class="av-carrusel-btn av-carrusel-btn-prev" data-carrusel-prev>‹</button>
+            <button class="av-carrusel-btn av-carrusel-btn-next" data-carrusel-next>›</button>
+        </div>
+
+        <div class="av-split">
+            <div>
+                <p class="av-section-text">El equipo postuló al <strong>Estímulo a la Preservación Audiovisual</strong> de la DAFO con un proyecto que incluía, además de Tacna y Arica, otros archivos regionales. Fue seleccionado con observaciones del jurado, que advirtió su excesiva amplitud.</p>
+                <p class="av-section-text">Solo tres de los siete miembros iniciales culminaron el proyecto. El Estado intervino como financista, supervisor y mediador, pero el vínculo estuvo marcado por una desconfianza hacia las instituciones por temor a la expropiación.</p>
+                <div class="av-pull-quote">
+                    Era un proyecto muy ambicioso. La sola recuperación de Tacna y Arica ya es un proyecto
+                    <cite>— Efraín Bedoya</cite>
+                </div>
+            </div>
+            <div class="av-split-text">
+                <div class="av-stat-grid">
+                    <div>
+                        <div class="av-stat-num">7</div>
+                        <div class="av-stat-label">Miembros iniciales</div>
+                    </div>
+                    <div>
+                        <div class="av-stat-num">3</div>
+                        <div class="av-stat-label">Culminaron</div>
+                    </div>
+                </div>
+                <span class="av-badge">Aprendizaje</span>
+                <p style="font-size:0.85rem;color:var(--av-color-muted);margin-top:var(--av-space-sm);line-height:1.6;">Varios integrantes se formaron en archivística y preservación audiovisual, generando capital de conocimiento técnico.</p>
+            </div>
+        </div>
+        <div class="av-meta">
+            <div class="av-meta-item">
+                <div class="av-meta-item-label">Financiamiento</div>
+                <div class="av-meta-item-value">Estímulo a la Preservación Audiovisual · DAFO</div>
+            </div>
+            <div class="av-meta-item">
+                <div class="av-meta-item-label">Estado</div>
+                <div class="av-meta-item-value">Completado (parcial)</div>
+            </div>
+            <div class="av-meta-item">
+                <div class="av-meta-item-label">Rol del Estado</div>
+                <div class="av-meta-item-value">Financista, supervisor, mediador</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ MANAYSCAN ═══════════════ -->
+<section id="manayscan" class="av-section av-section-dark">
+    <div class="av-container av-reveal">
+        <span class="av-section-label">Innovación tecnológica</span>
+        <h2 class="av-section-title">Manayscan<br>Escáner artesanal</h2>
+    </div>
+
+    <div class="av-container">
+        <div class="av-split">
+            <div>
+                <div class="av-slider" data-slider>
+                    <div class="av-slider-track">
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="background:#2A2A2A;color:#555;">🔧 Manayscan — Vista general</div>
+                            <div class="av-slider-caption"><strong>Manayscan</strong> — Diseño DIY · 2022 / Fuente: Archivo</div>
+                        </div>
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="background:#2A2A2A;color:#555;">⚙️ Sistema de arrastre — Sprocket</div>
+                            <div class="av-slider-caption"><strong>Sistema de arrastre</strong> — Sprocket / Fuente: Archivo</div>
+                        </div>
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="background:#2A2A2A;color:#555;">🔬 Manayscan 2 — Versión mejorada</div>
+                            <div class="av-slider-caption"><strong>Manayscan 2</strong> — Versión mejorada / Fuente: Archivo</div>
+                        </div>
+                    </div>
+                    <button class="av-slider-btn av-slider-btn-prev" data-slider-prev>‹</button>
+                    <button class="av-slider-btn av-slider-btn-next" data-slider-next>›</button>
+                </div>
+                <div class="av-slider-dots" data-slider-dots></div>
+            </div>
+            <div class="av-split-text">
+                <p class="av-section-text">El proyecto generó un aprendizaje técnico significativo en el manejo de material fílmico de nitrato en 35mm. Se creó el <strong>Manayscan</strong>, escáner artesanal diseñado por Efraín Bedoya y construido por Yonny Manay, reutilizando piezas de cámaras y proyectores en desuso. El equipo consistía en una estructura de madera con sistema de arrastre por sprocket.</p>
+                <p class="av-section-text">Superó las expectativas en calidad de imagen y fue reconocido como experiencia pionera en Sudamérica para digitalización artesanal de 35mm.</p>
+                <div style="display:flex;gap:var(--av-space-sm);flex-wrap:wrap;margin:var(--av-space-lg) 0;">
+                    <span class="av-badge">DIY</span>
+                    <span class="av-badge">35mm</span>
+                    <span class="av-badge">Nitrato</span>
+                    <span class="av-badge">Open source</span>
+                </div>
+                <div class="av-pull-quote">
+                    Una experiencia pionera en Sudamérica para la digitalización artesanal de 35mm
+                    <cite>— Especialistas internacionales</cite>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ EXHIBICIÓN ═══════════════ -->
+<section id="exhibicion" class="av-section">
+    <div class="av-container av-reveal">
+        <span class="av-section-label">2022–2023</span>
+        <h2 class="av-section-title">Exhibición e impacto local</h2>
+    </div>
+
+    <div class="av-container">
+        <div class="av-split">
+            <div>
+                <div class="av-slider" data-slider>
+                    <div class="av-slider-track">
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">🎬 Festival Raíces · Tacna, 2022</div>
+                            <div class="av-slider-caption"><strong>Festival Raíces</strong> — Tacna, 2022 / Fuente: Archivo</div>
+                        </div>
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">▶️ YouTube — Conflicto de versiones</div>
+                            <div class="av-slider-caption"><strong>AEHT vs Red</strong> — Pugna por la legitimidad / Fuente: YouTube</div>
+                        </div>
+                    </div>
+                    <button class="av-slider-btn av-slider-btn-prev" data-slider-prev>‹</button>
+                    <button class="av-slider-btn av-slider-btn-next" data-slider-next>›</button>
+                </div>
+                <div class="av-slider-dots" data-slider-dots></div>
+            </div>
+            <div class="av-split-text">
+                <p class="av-section-text">La película restaurada se presentó en la primera edición del <strong>Festival Raíces de Tacna</strong>, detonando un conflicto público sobre el rol de Luis Cavagnaro y la legitimidad de la Red como agente restaurador.</p>
+                <p class="av-section-text">Una copia fue difundida sin autorización por la <strong>Asociación de Estudios Históricos de Tacna (AEHT)</strong>, generando acusaciones de piratería y una pugna por la legitimidad del archivo y la autoridad moral sobre la película.</p>
+                <div class="av-pull-quote">
+                    La restauración audiovisual es percibida de manera distinta según el campo
+                    <cite>— Conflicto por la legitimidad</cite>
+                </div>
+                <p class="av-section-text">La versión AEHT alcanzó muchas más visualizaciones en YouTube, evidenciando un acceso más democrático al salir del circuito especializado de festivales.</p>
+                <div class="av-meta">
+                    <div class="av-meta-item">
+                        <div class="av-meta-item-label">Versión Red</div>
+                        <div class="av-meta-item-value">Fidelidad a copia original · YouTube</div>
+                    </div>
+                    <div class="av-meta-item">
+                        <div class="av-meta-item-label">Versión AEHT</div>
+                        <div class="av-meta-item-value">Palimpsesto con voz, música y relato nacionalista</div>
+                    </div>
+                    <div class="av-meta-item">
+                        <div class="av-meta-item-label">Visualizaciones</div>
+                        <div class="av-meta-item-value">Versión AEHT triplicó a la versión Red</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ NUEVOS USOS ═══════════════ -->
+<section id="usos" class="av-section">
+    <div class="av-container av-reveal">
+        <span class="av-section-label">Actualidad</span>
+        <h2 class="av-section-title">Nuevos usos</h2>
+    </div>
+
+    <div class="av-container">
+        <div class="av-split">
+            <div>
+                <div class="av-slider" data-slider>
+                    <div class="av-slider-track">
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">▶️ YouTube — Versión Red<br>Fidelidad a copia original</div>
+                            <div class="av-slider-caption"><strong>Versión Red</strong> — Fidelidad a copia original / Fuente: YouTube</div>
+                        </div>
+                        <div class="av-slider-slide">
+                            <div class="av-img-mock" style="aspect-ratio:4/3;">▶️ YouTube — Versión AEHT<br>Palimpsesto</div>
+                            <div class="av-slider-caption"><strong>Versión AEHT</strong> — Palimpsesto / Fuente: YouTube</div>
+                        </div>
+                    </div>
+                    <button class="av-slider-btn av-slider-btn-prev" data-slider-prev>‹</button>
+                    <button class="av-slider-btn av-slider-btn-next" data-slider-next>›</button>
+                </div>
+                <div class="av-slider-dots" data-slider-dots></div>
+            </div>
+            <div class="av-split-text">
+                <p class="av-section-text">La digitalización ha otorgado a la película una nueva vida. La obra deja de ser un objeto silente del pasado para convertirse en un <strong>archivo activo</strong> que produce debates, emociones y reinterpretaciones.</p>
+                <p class="av-section-text">La versión de la AEHT incorpora voz en off, música dramática y un discurso poético-nacionalista — un <strong>palimpsesto</strong> que construye un nuevo sentido histórico y emocional.</p>
+                <div class="av-pull-quote">
+                    Las imágenes históricas siguen generando disputas y lecturas desde el presente
+                    <cite>— Michael Tapia, Giovanna Pollarolo</cite>
+                </div>
+                <p class="av-section-text">El caso revela el rol del archivo audiovisual como bien cultural vivo, cuya circulación produce valor simbólico, identitario y político.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="av-footer">
+    <div class="av-footer-inner">
+        <div class="av-footer-grid">
+            <div class="av-footer-col">
+                <span class="av-footer-brand">Archivo en disputa</span>
+                <p class="av-footer-desc">Regímenes de valor y nuevos usos del archivo audiovisual. Proyecto de investigación sobre preservación, circulación y disputas en torno a la película <em>Tacna y Arica</em> (1925) de Renée Oro.</p>
+            </div>
+            <div class="av-footer-col">
+                <span class="av-footer-heading">Secciones</span>
+                <ul class="av-footer-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#contexto">Tacna y Arica</a></li>
+                    <li><a href="#preservacion">Estímulo Preservación</a></li>
+                    <li><a href="#">Perfiles y proyectos</a></li>
+                </ul>
+            </div>
+            <div class="av-footer-col">
+                <span class="av-footer-heading">Créditos</span>
+                <ul class="av-footer-links">
+                    <li><a href="#">Efraín Bedoya</a></li>
+                    <li><a href="#">Giovanna Pollarolo</a></li>
+                    <li><a href="#">Michael Tapia</a></li>
+                    <li><a href="#">Edward de Ybarra</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="av-footer-bottom">
+            <span>© 2025 · Archivo en disputa</span>
+            <span>✦ Proyecto de investigación</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-slider]').forEach(slider => {
+        const track = slider.querySelector('.av-slider-track');
+        const slides = slider.querySelectorAll('.av-slider-slide');
+        const prevBtn = slider.querySelector('[data-slider-prev]');
+        const nextBtn = slider.querySelector('[data-slider-next]');
+        const dotsContainer = slider.parentElement.querySelector('[data-slider-dots]');
+        let current = 0;
+        const total = slides.length;
+
+        function goTo(index) {
+            if (index < 0) index = total - 1;
+            if (index >= total) index = 0;
+            current = index;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            if (dotsContainer) {
+                dotsContainer.querySelectorAll('.av-slider-dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === current);
+                });
+            }
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'av-slider-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => goTo(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') goTo(current - 1);
+            if (e.key === 'ArrowRight') goTo(current + 1);
+        });
+
+        let touchStartX = 0;
+        slider.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        slider.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) goTo(current + 1);
+                else goTo(current - 1);
+            }
+        }, { passive: true });
+    });
+
+    document.querySelectorAll('[data-carrusel]').forEach(carrusel => {
+        const track = carrusel.querySelector('.av-carrusel-track');
+        const slides = carrusel.querySelectorAll('.av-carrusel-slide');
+        const prevBtn = carrusel.querySelector('[data-carrusel-prev]');
+        const nextBtn = carrusel.querySelector('[data-carrusel-next]');
+        let current = 0;
+        const total = slides.length;
+
+        function update() {
+            track.style.transform = `translateX(-${current * (50 + 50 / (total - 1))}%)`;
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            if (current > 0) { current--; update(); }
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            if (current < total - 2) { current++; update(); }
+        });
+
+        let touchStartX = 0;
+        carrusel.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        carrusel.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && current < total - 2) { current++; update(); }
+                else if (diff < 0 && current > 0) { current--; update(); }
+            }
+        }, { passive: true });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.av-reveal, .av-pull-quote, .av-stat-num, .av-meta').forEach(el => {
+        observer.observe(el);
+    });
+
+    const nav = document.querySelector('.av-nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    const navLinks = document.querySelectorAll('.av-nav-links a');
+    const sections = document.querySelectorAll('section[id]');
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            navLinks.forEach(link => {
+                link.style.color = entry.isIntersecting && link.getAttribute('href') === '#' + entry.target.id
+                    ? '#fff'
+                    : 'rgba(255,255,255,0.6)';
+            });
+        });
+    }, { threshold: 0.3 });
+    sections.forEach(s => sectionObserver.observe(s));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+/* ============================================================
+   🗂️ REPOSITORIO — Proyectos ganadores de estímulos
+   Grid de tarjetas con filtros
+   ============================================================ */
+
+/* ─── Contenedor principal ────────────────────────────────── */
+.av-repositorio {
+    max-width: var(--av-container-max);
+    margin: 0 auto;
+    padding: var(--av-space-2xl) var(--av-container-padding);
+}
+
+/* ─── Encabezado ──────────────────────────────────────────── */
+.av-repositorio-header {
+    margin-bottom: var(--av-space-2xl);
+}
+
+.av-repositorio-title {
+    font-family: var(--av-font-heading);
+    font-size: var(--av-text-2xl);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin-bottom: var(--av-space-sm);
+}
+
+.av-repositorio-count {
+    font-family: var(--av-font-mono);
+    font-size: var(--av-text-sm);
+    color: var(--av-color-muted);
+}
+
+/* ─── BARRA DE FILTROS ────────────────────────────────────── */
+.av-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--av-space-sm);
+    margin-bottom: var(--av-space-xl);
+    padding-bottom: var(--av-space-lg);
+    border-bottom: 1px solid var(--av-color-border);
+}
+
+.av-filtros-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--av-space-sm);
+}
+
+.av-filtros-label {
+    font-family: var(--av-font-mono);
+    font-size: var(--av-text-xs);
+    color: var(--av-color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: var(--av-space-xs);
+}
+
+.av-filtro-btn {
+    font-family: var(--av-font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 6px 14px;
+    border-radius: var(--av-radius-md);
+    border: 1.5px solid var(--av-color-border);
+    background: var(--av-color-blanco);
+    color: var(--av-color-muted);
+    cursor: pointer;
+    transition: all var(--av-transition);
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.av-filtro-btn:hover {
+    border-color: var(--av-color-accent);
+    color: var(--av-color-accent);
+    background: var(--av-color-accent-light);
+}
+
+.av-filtro-btn.is-active {
+    background: var(--av-color-accent);
+    color: white;
+    border-color: var(--av-color-accent);
+}
+
+/* ─── Campo de búsqueda textual ───────────────────────────── */
+.av-filtro-search {
+    flex: 1;
+    min-width: 200px;
+}
+
+.av-filtro-search input {
+    width: 100%;
+    font-family: var(--av-font-body);
+    font-size: var(--av-text-sm);
+    padding: 10px 16px;
+    border: 1.5px solid var(--av-color-border);
+    border-radius: var(--av-radius-md);
+    background: var(--av-color-blanco);
+    color: var(--av-color-texto);
+    transition: border-color var(--av-transition);
+}
+
+.av-filtro-search input:focus {
+    outline: none;
+    border-color: var(--av-color-accent);
+    box-shadow: 0 0 0 3px rgba(78, 107, 78, 0.1);
+}
+
+.av-filtro-search input::placeholder {
+    color: var(--av-color-muted);
+}
+
+/* ─── GRID DE PROYECTOS ───────────────────────────────────── */
+.av-proyectos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--av-space-lg);
+}
+
+/* ─── Tarjeta de proyecto ─────────────────────────────────── */
+.av-proyecto-card {
+    background: var(--av-color-blanco);
+    border-radius: var(--av-radius-md);
+    border: 1px solid var(--av-color-border);
+    overflow: hidden;
+    transition: box-shadow var(--av-transition), transform var(--av-transition), opacity 0.4s ease;
+    opacity: 1;
+}
+
+.av-proyecto-card:hover {
+    box-shadow: var(--av-shadow-md);
+    transform: translateY(-3px);
+    border-color: transparent;
+}
+
+.av-proyecto-card.is-hidden {
+    display: none;
+}
+
+.av-proyecto-card.is-visible {
+    animation: av-card-fade-in 0.4s ease forwards;
+}
+
+@keyframes av-card-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Imagen / thumbnail ──────────────────────────────────── */
+.av-proyecto-thumb {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    background: var(--av-color-surface-alt);
+}
+
+.av-proyecto-thumb-placeholder {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, var(--av-color-surface-alt), var(--av-color-border));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--av-font-heading);
+    font-size: var(--av-text-2xl);
+    color: var(--av-color-muted);
+}
+
+/* ─── Body de la tarjeta ──────────────────────────────────── */
+.av-proyecto-body {
+    padding: var(--av-space-lg);
+}
+
+.av-proyecto-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--av-space-sm);
+    margin-bottom: var(--av-space-sm);
+}
+
+.av-proyecto-tag {
+    font-family: var(--av-font-mono);
+    font-size: 0.6rem;
+    padding: 3px 10px;
+    border-radius: var(--av-radius-md);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--av-color-accent-light);
+    color: var(--av-color-accent);
+}
+
+.av-proyecto-tag-agno {
+    background: var(--av-color-surface-alt);
+    color: var(--av-color-muted);
+    border: 1px solid var(--av-color-border);
+}
+
+.av-proyecto-titulo {
+    font-family: var(--av-font-heading);
+    font-size: var(--av-text-base);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 var(--av-space-xs);
+    line-height: 1.3;
+}
+
+.av-proyecto-desc {
+    font-size: var(--av-text-sm);
+    color: var(--av-color-muted);
+    line-height: 1.5;
+    margin: 0 0 var(--av-space-sm);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.av-proyecto-autor {
+    font-size: var(--av-text-xs);
+    color: var(--av-color-muted);
+    font-style: italic;
+}
+
+/* ─── Estado vacío ────────────────────────────────────────── */
+.av-repositorio-empty {
+    text-align: center;
+    padding: var(--av-space-4xl) var(--av-space-lg);
+    color: var(--av-color-muted);
+}
+
+.av-repositorio-empty p {
+    margin: 0 auto;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .av-proyectos-grid {
+        grid-template-columns: 1fr;
+        gap: var(--av-space-md);
+    }
+
+    .av-filtros {
+        flex-direction: column;
+    }
+
+    .av-filtro-search {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .av-proyecto-thumb {
+        height: 140px;
+    }
+}
