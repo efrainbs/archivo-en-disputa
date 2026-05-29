@@ -562,13 +562,13 @@
                         opacity 0.25s ease;
             transform-origin: center;
         }
-        .av-sidemenu.is-open .av-hamburger-line:nth-child(1) {
+        .av-nav.is-open .av-hamburger-line:nth-child(1) {
             transform: translateY(8px) rotate(45deg);
         }
-        .av-sidemenu.is-open .av-hamburger-line:nth-child(2) {
+        .av-nav.is-open .av-hamburger-line:nth-child(2) {
             opacity: 0;
         }
-        .av-sidemenu.is-open .av-hamburger-line:nth-child(3) {
+        .av-nav.is-open .av-hamburger-line:nth-child(3) {
             transform: translateY(-8px) rotate(-45deg);
         }
 
@@ -635,7 +635,7 @@
             text-decoration: none;
             line-height: 1.2;
             padding: 12px 0;
-            transition: color 0.3s ease, padding 0.3s ease;
+            transition: color 0.3s ease, padding 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             display: block;
             position: relative;
             opacity: 0;
@@ -661,26 +661,19 @@
             content: '';
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: 8px;
             width: 0;
             height: 2px;
             background: var(--av-color-accent);
-            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .av-sidemenu.is-open .av-sidemenu-links a::before {
-            width: 100%;
+        .av-sidemenu-links a:hover::before {
+            width: 20px;
         }
-        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(1) a::before { transition-delay: 0.15s; }
-        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(2) a::before { transition-delay: 0.20s; }
-        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(3) a::before { transition-delay: 0.25s; }
-        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(4) a::before { transition-delay: 0.30s; }
-        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(5) a::before { transition-delay: 0.35s; }
-        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(6) a::before { transition-delay: 0.40s; }
-        .av-sidemenu.is-open .av-sidemenu-links li:nth-child(7) a::before { transition-delay: 0.45s; }
 
         .av-sidemenu-links a:hover {
             color: var(--av-color-accent);
-            padding-left: 8px;
+            padding-left: 28px;
         }
         .av-sidemenu-footer {
             margin-top: auto;
@@ -699,8 +692,8 @@
         body.menu-open .av-hero,
         body.menu-open .av-section,
         body.menu-open .av-footer {
-            filter: blur(2px);
-            transition: filter 0.4s ease;
+            filter: blur(4px);
+            transition: filter 0.5s ease;
         }
 
         /* ─── RESPONSIVE ─── */
@@ -1267,10 +1260,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openMenu() {
         sidemenu.classList.add('is-open');
+        nav.classList.add('is-open');
         document.body.classList.add('menu-open');
     }
     function closeMenu() {
         sidemenu.classList.remove('is-open');
+        nav.classList.remove('is-open');
         document.body.classList.remove('menu-open');
     }
 
